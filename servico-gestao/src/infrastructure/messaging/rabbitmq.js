@@ -4,7 +4,7 @@ let connection = null;
 let channel = null;
 
 export async function connectRabbitMQ() {
-  const amqpUrl = process.env.RABBITMQ_URL;
+  const amqpUrl = 'amqps://fefqlcnv:tqVg76mx9sIg1ShHvtX7oZLWh3nhPh_r@jaragua.lmq.cloudamqp.com/fefqlcnv';
 
   if (!amqpUrl) {
     throw new Error('Variável de ambiente RABBITMQ_URL não definida.');

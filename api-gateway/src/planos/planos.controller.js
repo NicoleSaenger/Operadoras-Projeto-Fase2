@@ -2,7 +2,7 @@ import { Controller, Get, Patch, Bind, Param, Body, Dependencies } from '@nestjs
 import { firstValueFrom } from 'rxjs';
 import { GESTAO_SERVICE } from '../gestao-client.module.js';
 
-@Controller('planos')
+@Controller('gestao/planos')
 @Dependencies(GESTAO_SERVICE)
 export class PlanosController {
   constructor(clientProxy) {

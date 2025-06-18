@@ -2,7 +2,7 @@ import { Controller, Get, Dependencies } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { GESTAO_SERVICE } from '../gestao-client.module.js';
 
-@Controller('clientes')
+@Controller('gestao/clientes')
 @Dependencies(GESTAO_SERVICE)
 export class ClientesController {
   constructor(clientProxy) {

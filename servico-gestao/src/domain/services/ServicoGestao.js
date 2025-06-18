@@ -139,4 +139,12 @@ export class ServicoGestao {
       status: a.isAtiva() ? 'ATIVO' : 'CANCELADO'
     }));
   }
+
+    // Verifica se uma assinatura está ativa com base no código
+  async verificarAssinaturaAtiva(codAss) {
+    const assinatura = await this.repositorioAssinatura.recuperaPorCodigo(codAss);
+    return assinatura ? assinatura.isAtiva() : false;
+  }
+
+
 }

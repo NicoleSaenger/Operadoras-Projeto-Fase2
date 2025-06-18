@@ -12,6 +12,7 @@ import { ListarAssinaturasDoPlano_UC } from './application/use-cases/ListarAssin
 import { ListarAssinaturasPorTipo_UC } from './application/use-cases/ListarAssinaturasPorTipo_UC.js';
 import { ListarClientes_UC } from './application/use-cases/ListarClientes_UC.js';
 import { ListarPlanos_UC } from './application/use-cases/ListarPlanos_UC.js';
+import { VerificarAssinaturaAtiva_UC } from './application/use-cases/VerificarAssinaturaAtiva_UC.js';
 
 // Serviço de domínio
 import { ServicoGestao } from './domain/services/ServicoGestao.js';
@@ -28,7 +29,8 @@ import { TypeormClienteRepository } from './infrastructure/persistence/TypeormCl
 
 // Consumidor de eventos do RabbitMQ
 import { ConsumidorPagamento } from './infrastructure/messaging/consumidorPagamento.js';
-import { GestaoMessageHandler } from './infrastructure/messaging/GestaoMessageHandler.js';
+import { GestaoMessageHandler } from './infrastructure/messaging/gestaoMessageHandler.js';
+import { PlanosAtivosHandler } from './infrastructure/messaging/planosAtivosHandler.js';
 
 @Module({
   imports: [
@@ -47,6 +49,7 @@ import { GestaoMessageHandler } from './infrastructure/messaging/GestaoMessageHa
   controllers: [
     GestaoController,
     GestaoMessageHandler,
+    PlanosAtivosHandler
   ],
   providers: [
     // Repositórios injetáveis
@@ -93,6 +96,7 @@ import { GestaoMessageHandler } from './infrastructure/messaging/GestaoMessageHa
     ListarAssinaturasPorTipo_UC,
     ListarAssinaturasDoCliente_UC,
     ListarAssinaturasDoPlano_UC,
+    VerificarAssinaturaAtiva_UC
 
     
   ],

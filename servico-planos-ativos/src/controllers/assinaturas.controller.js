@@ -1,5 +1,5 @@
 import { Controller, Get, Bind, Param, Dependencies } from '@nestjs/common';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, timeout } from 'rxjs';
 import { AssinaturasService } from '../domain/assinaturas.service.js';
 
 @Controller('planosativos')
@@ -20,18 +20,20 @@ export class AssinaturasController {
     if (!ativo) {
       try {
         const resposta = await firstValueFrom(
-          this.gestaoClient.send('consultar_assinatura_valida', codAss)
+            this.gestaoClient.send('consultar_assinatura_valida', codAss).pipe(
+            timeout(5000) // tempo máximo para aguardar resposta: 5 segundos
+            )
         );
 
         ativo = resposta === true;
 
         if (ativo) {
-          this.assinaturasService.add(codAss);
+            this.assinaturasService.add(codAss);
         }
-      } catch (err) {
+        } catch (err) {
         console.error(`[X] Erro ao consultar servico-gestao para assinatura ${codAss}:`, err.message);
         ativo = false;
-      }
+        }
     }
 
     console.log(`[→] Plano ${codAss} está ativo? ${ativo}`);

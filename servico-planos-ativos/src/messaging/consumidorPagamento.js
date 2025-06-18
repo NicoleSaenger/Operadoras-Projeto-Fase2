@@ -1,4 +1,3 @@
-// src/messaging/consumidorPagamento.js
 import { Injectable } from '@nestjs/common';
 import { getChannel } from './rabbitmq.js';
 import { AssinaturasService } from '../domain/assinaturas.service.js';
@@ -11,7 +10,7 @@ export class ConsumidorPagamento {
 
   async consumir() {
     try {
-      const channel = getChannel();
+      const channel = await getChannel(); // <-- IMPORTANTE: await aqui
       const exchange = 'pagamentos';
 
       await channel.assertExchange(exchange, 'topic', { durable: true });
@@ -30,8 +29,8 @@ export class ConsumidorPagamento {
 
           if (['PagamentoRealizado', 'PagamentoPlanoServicoGestao'].includes(evento.evento)) {
             const codAss = evento.dados.codAss;
-            console.log('[x] Removendo assinatura da cache:', codAss);
-            this.assinaturasService.remove(codAss);  // removendo do cache
+            console.log('[x] Removendo assinatura do cache:', codAss);
+            this.assinaturasService.remove(codAss);
           }
         } catch (err) {
           console.error('[X] Erro ao processar mensagem:', err.message);

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Bind, Dependencies } from '@nestjs/common';
+import { Controller, Get, Bind, Param, Dependencies } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { AssinaturasService } from '../domain/assinaturas.service.js';
 
@@ -10,24 +10,31 @@ export class AssinaturasController {
     this.gestaoClient = gestaoClient;
   }
 
-  @Get(':codass')
+  @Get(':codAss')
   @Bind(Param())
   async isAtiva(params) {
-    const codass = params.codass;
+    const codAss = params.codAss;
 
-    let ativo = this.assinaturasService.isActive(codass);
+    let ativo = this.assinaturasService.isActive(codAss);
 
     if (!ativo) {
-      const resposta = await firstValueFrom(
-        this.gestaoClient.send('consultar_assinatura_valida', codass)
-      );
+      try {
+        const resposta = await firstValueFrom(
+          this.gestaoClient.send('consultar_assinatura_valida', codAss)
+        );
 
-      if (resposta === true) {
-        this.assinaturasService.add(codass);
-        ativo = true;
+        ativo = resposta === true;
+
+        if (ativo) {
+          this.assinaturasService.add(codAss);
+        }
+      } catch (err) {
+        console.error(`[X] Erro ao consultar servico-gestao para assinatura ${codAss}:`, err.message);
+        ativo = false;
       }
     }
 
-    return ativo; // resposta como booleano puro, conforme exigência da Fase 2
+    console.log(`[→] Plano ${codAss} está ativo? ${ativo}`);
+    return { codigo: codAss, ativa: ativo };
   }
 }

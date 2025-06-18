@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Dependencies  } from '@nestjs/common';
 import { getChannel } from './rabbitmq.js';
 import { AssinaturasService } from '../../domain/services/assinaturas.service.js';
 
 @Injectable()
+@Dependencies(AssinaturasService) 
 export class ConsumidorPagamento {
   constructor(assinaturasService) {
     this.assinaturasService = assinaturasService;

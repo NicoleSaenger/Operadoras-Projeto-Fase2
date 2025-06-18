@@ -1,10 +1,10 @@
 // app.module.js
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AssinaturasController } from './controllers/assinaturas.controller.js';
-import { AssinaturasService } from './domain/assinaturas.service.js';
-import { PagamentoHandler } from './messaging/pagamento.handler.js';
-import { ConsumidorPagamento } from './messaging/consumidorPagamento.js';
+import { AssinaturasController } from './interfaces/controllers/assinaturas.controller.js';
+import { AssinaturasService } from './domain/services/assinaturas.service.js';
+import { PagamentoHandler } from './infrastructure/messaging/pagamento.handler.js';
+import { ConsumidorPagamento } from './infrastructure/messaging/consumidorPagamento.js';
 
 @Module({
   imports: [

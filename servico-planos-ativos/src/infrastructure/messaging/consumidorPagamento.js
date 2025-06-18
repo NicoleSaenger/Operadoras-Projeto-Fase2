@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { getChannel } from './rabbitmq.js';
-import { AssinaturasService } from '../domain/assinaturas.service.js';
+import { AssinaturasService } from '../../domain/services/assinaturas.service.js';
 
 @Injectable()
 export class ConsumidorPagamento {

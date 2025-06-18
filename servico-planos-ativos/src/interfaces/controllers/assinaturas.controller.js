@@ -1,6 +1,6 @@
 import { Controller, Get, Bind, Param, Dependencies } from '@nestjs/common';
 import { firstValueFrom, timeout } from 'rxjs';
-import { AssinaturasService } from '../domain/assinaturas.service.js';
+import { AssinaturasService } from '../../domain/services/assinaturas.service.js';
 
 @Controller('planosativos')
 @Dependencies(AssinaturasService, 'GESTAO_SERVICE')

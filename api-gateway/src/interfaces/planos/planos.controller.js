@@ -1,6 +1,6 @@
 import { Controller, Get, Patch, Bind, Param, Body, Dependencies } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
-import { GESTAO_SERVICE } from '../gestao-client.module.js';
+import { GESTAO_SERVICE } from '../../gestao-client.module.js';
 
 @Controller('gestao/planos')
 @Dependencies(GESTAO_SERVICE)

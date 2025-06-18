@@ -1,6 +1,6 @@
 import { Controller, Dependencies } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
-import { AssinaturasService } from '../domain/assinaturas.service.js';
+import { AssinaturasService } from '../../domain/services/assinaturas.service.js';
 
 @Controller()
 @Dependencies(AssinaturasService)

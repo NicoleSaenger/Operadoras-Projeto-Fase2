@@ -1,4 +1,4 @@
-// Interface responsável por definir os métodos das assinaturas
+//Interface responsável por definir os métodos das assinaturas
 export class IAssinaturaModelRepository {
   todos() { 
     throw new Error('Não implementado'); 

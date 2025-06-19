@@ -1,12 +1,12 @@
-// Importa decoradores e dependências do NestJS
+//Importa decoradores e dependências do NestJS
 import { Injectable, Dependencies } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-// Importa a entidade e interface necessárias
+//Importa a entidade e interface necessárias
 import { AssinaturaModel } from '../../domain/entities/AssinaturaModel.js';
 import { IAssinaturaModelRepository } from '../../domain/repositories/IAssinaturaModelRepository.js';
 
-// Implementação concreta do repositório usando TypeORM
+//Implementação concreta do repositório usando TypeORM
 @Injectable()
 @Dependencies(getRepositoryToken(AssinaturaModel))
 export class TypeormAssinaturaRepository extends IAssinaturaModelRepository {
@@ -14,10 +14,10 @@ export class TypeormAssinaturaRepository extends IAssinaturaModelRepository {
 
   constructor(repo) {
     super();
-    this.#repo = repo; // Injeção da dependência do repositório
+    this.#repo = repo; //Injeção da dependência do repositório
   }
 
-  // Retorna todos os métodos das assinaturas
+  //Retorna todos os métodos das assinaturas
   async todos() {
     return await this.#repo.find();
   }

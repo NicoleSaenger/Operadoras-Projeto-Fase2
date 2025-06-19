@@ -12,23 +12,23 @@ export class ServicoGestao {
 
   // --- CLIENTES ---
 
-  // Retorna todos os clientes cadastrados
+  //Retorna todos os clientes cadastrados
   async listarClientes() {
     return await this.repositorioCliente.todos();
   }
 
-  // Cadastra um novo cliente
+  //Cadastra um novo cliente
   async cadastraCliente(dados) {
     return await this.repositorioCliente.cadastra(dados);
   }
 
-  // Busca um cliente pelo código
+  //Busca um cliente pelo código
   async recuperaClientePorCodigo(codigo) {
     return await this.repositorioCliente.recuperaPorCodigo(codigo);
   }
 
   
-  // Atualiza os dados de um cliente
+  //Atualiza os dados de um cliente
   async atualizaCliente(clienteAtualizado) {
     return await this.repositorioCliente.atualiza(clienteAtualizado);
   }
@@ -37,13 +37,13 @@ export class ServicoGestao {
   // --- PLANOS ---
 
   
-  // Retorna todos os planos cadastrados
+  //Retorna todos os planos cadastrados
   async listarPlanos() {
     return await this.repositorioPlano.todos();
   }
 
   
-  // Cadastra um novo plano
+  //Cadastra um novo plano
   async cadastraPlano(dados) {
     const plano = {
       codigo: dados.codigo,
@@ -55,8 +55,8 @@ export class ServicoGestao {
     return await this.repositorioPlano.cadastra(plano);
   }
 
-  
-  // Atualiza o custo mensal de um plano
+
+  //Atualiza o custo mensal de um plano
   async atualizarCustoPlano(codigo, novoCusto) {
     const plano = await this.repositorioPlano.recuperaPorCodigo(codigo);
     if (!plano) throw new Error('Plano não encontrado');
@@ -71,12 +71,12 @@ export class ServicoGestao {
   // --- ASSINATURAS ---
 
   
-  // Retorna todas as assinaturas
+  //Retorna todas as assinaturas
   async listarAssinaturas() {
     return await this.repositorioAssinatura.todos();
   }
 
-  // Cadastra uma nova assinatura com fidelidade de 1 ano
+  //Cadastra uma nova assinatura com fidelidade de 1 ano
   async cadastrarAssinatura(dados) {
     const hoje = new Date();
     const fim = new Date(hoje);
@@ -96,11 +96,11 @@ export class ServicoGestao {
   }
 
   
-  // Lista assinaturas por tipo: ATIVOS, CANCELADOS ou TODOS
+  //Lista assinaturas por tipo: ATIVOS, CANCELADOS ou TODOS
   async listarAssinaturasPorTipo(tipo) {
     const todas = await this.repositorioAssinatura.todos();
 
-    // Atualiza o campo tipo de cada assinatura com base na regra de negócio
+    //Atualiza o campo tipo de cada assinatura com base na regra de negócio
     for (const assinatura of todas) {
       assinatura.tipo = assinatura.isAtiva() ? 'ATIVOS' : 'CANCELADOS';
     }
@@ -111,7 +111,7 @@ export class ServicoGestao {
   }
 
 
-  // Lista assinaturas de um cliente específico com status
+  //Lista assinaturas de um cliente específico com status
   async listarAssinaturasDoCliente(codCli) {
     const assinaturas = await this.repositorioAssinatura.listarPorCliente(codCli);
     
@@ -126,7 +126,7 @@ export class ServicoGestao {
   }
 
   
-  // Lista assinaturas de um plano específico com status
+  //Lista assinaturas de um plano específico com status
   async listarAssinaturasDoPlano(codPlano) {
     const assinaturas = await this.repositorioAssinatura.listarPorPlano(codPlano);
     
@@ -140,7 +140,7 @@ export class ServicoGestao {
     }));
   }
 
-    // Verifica se uma assinatura está ativa com base no código
+  //Verifica se uma assinatura está ativa com base no código
   async verificarAssinaturaAtiva(codAss) {
     const assinatura = await this.repositorioAssinatura.recuperaPorCodigo(codAss);
     return assinatura ? assinatura.isAtiva() : false;

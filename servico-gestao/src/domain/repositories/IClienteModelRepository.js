@@ -1,4 +1,4 @@
-// Interface responsável por definir os métodos dos clientes
+//Interface responsável por definir os métodos dos clientes
 export class IClienteModelRepository {
   todos() {
     throw new Error('Não implementado');

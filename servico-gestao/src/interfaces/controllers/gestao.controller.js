@@ -1,5 +1,6 @@
 import { Controller, Dependencies, Get, Post, Patch, Bind, Body, Param } from '@nestjs/common';
 
+//Importa todos os casos de uso necessários
 import { ListarClientes_UC } from '../../application/use-cases/ListarClientes_UC.js';
 import { ListarPlanos_UC } from '../../application/use-cases/ListarPlanos_UC.js';
 import { AtualizarCustoPlano_UC } from '../../application/use-cases/AtualizarCustoPlano_UC.js';
@@ -8,7 +9,7 @@ import { ListarAssinaturasPorTipo_UC } from '../../application/use-cases/ListarA
 import { ListarAssinaturasDoCliente_UC } from '../../application/use-cases/ListarAssinaturasDoCliente_UC.js';
 import { ListarAssinaturasDoPlano_UC } from '../../application/use-cases/ListarAssinaturasDoPlano_UC.js';
 
-// Controlador principal da gestão de clientes, planos e assinaturas
+//Define o controller responsável por lidar com os endpoints do servico-gestao
 @Controller('gestao')
 @Dependencies(
   ListarClientes_UC,
@@ -38,19 +39,19 @@ export class GestaoController {
     this.listarAssinaturasPlanoUC = listarAssinaturasPlanoUC;
   }
 
-  // Endpoint responsável por retornar a lista de todos os clientes
+  //Endpoint responsável por retornar a lista de todos os clientes
   @Get('clientes')
   async listarClientes() {
     return await this.listarClientesUC.run();
   }
 
-  // Retorna a lista de todos os planos
+  //Retorna a lista de todos os planos
   @Get('planos')
   async listarPlanos() {
     return await this.listarPlanosUC.run();
   }
 
-  // Atualiza o custo mensal de um plano
+  //Atualiza o custo mensal de um plano
   @Patch('planos/:idPlano')
   @Bind(Param(), Body())
   async atualizarCusto(params, body) {
@@ -59,7 +60,7 @@ export class GestaoController {
     return await this.atualizarCustoPlanoUC.run(id, custoMensal);
   }
 
-  // Cadastra uma nova assinatura
+  //Cadastra uma nova assinatura
   @Post('assinaturas')
   @Bind(Body())
   async cadastrarAssinatura(body) {
@@ -72,21 +73,21 @@ export class GestaoController {
     );
   }
 
-  // Retorna assinaturas filtradas por tipo: ATIVOS, CANCELADOS ou TODOS
+  //Retorna assinaturas filtradas por tipo: ATIVOS, CANCELADOS ou TODOS
   @Get('assinaturas/:tipo')
   @Bind(Param())
   async listarAssinaturasTipo(params) {
     return await this.listarAssinaturasTipoUC.run(params.tipo.toUpperCase());
   }
 
-  // Retorna assinaturas de um cliente específico
+  //Retorna assinaturas de um cliente específico
   @Get('assinaturascliente/:codcli')
   @Bind(Param())
   async listarAssinaturasCliente(params) {
     return await this.listarAssinaturasClienteUC.run(params.codcli);
   }
 
-  // Retorna assinaturas de um plano específico
+  //Retorna assinaturas de um plano específico
   @Get('assinaturasplano/:codplano')
   @Bind(Param())
   async listarAssinaturasPlano(params) {

@@ -1,4 +1,4 @@
-// Interface responsável por definir os métodos dos planos
+//Interface responsável por definir os métodos dos planos
 export class IPlanoModelRepository {
   todos() {
     throw new Error('Não implementado');

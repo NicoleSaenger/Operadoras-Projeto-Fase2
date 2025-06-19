@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn  } from 'typeorm';
 
-// Entidade que representa uma assinatura
+//Entidade que representa uma assinatura
 @Entity()
 export class AssinaturaModel {
-  // Gera automaticamente o ID da assinatura
+  //Gera automaticamente o ID da assinatura
   @PrimaryGeneratedColumn({ type: 'int' })
   codigo;
 

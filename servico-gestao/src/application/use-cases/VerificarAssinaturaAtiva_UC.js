@@ -1,7 +1,7 @@
 import { Injectable, Dependencies } from '@nestjs/common';
 import { ServicoGestao } from '../../domain/services/ServicoGestao.js';
 
-// Use case responsável por verificar se uma assinatura está ativa
+//Use case responsável por verificar se uma assinatura está ativa
 @Injectable()
 @Dependencies(ServicoGestao)
 export class VerificarAssinaturaAtiva_UC {
@@ -9,7 +9,7 @@ export class VerificarAssinaturaAtiva_UC {
     this.servicoGestao = servicoGestao;
   }
 
-  // Recebe o código da assinatura e verifica se está ativa
+  //Recebe o código da assinatura e verifica se está ativa ou não
   async run(codAss) {
     return await this.servicoGestao.verificarAssinaturaAtiva(codAss);
   }

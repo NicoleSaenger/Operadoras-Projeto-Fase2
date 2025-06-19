@@ -1,6 +1,7 @@
 import { Controller, Dependencies } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 
+//Importa todos os casos de uso relacionados aos endpoints do servico-gestao
 import { ListarClientes_UC } from '../../application/use-cases/ListarClientes_UC.js';
 import { ListarPlanos_UC } from '../../application/use-cases/ListarPlanos_UC.js';
 import { AtualizarCustoPlano_UC } from '../../application/use-cases/AtualizarCustoPlano_UC.js';
@@ -9,6 +10,7 @@ import { ListarAssinaturasPorTipo_UC } from '../../application/use-cases/ListarA
 import { ListarAssinaturasDoCliente_UC } from '../../application/use-cases/ListarAssinaturasDoCliente_UC.js';
 import { ListarAssinaturasDoPlano_UC } from '../../application/use-cases/ListarAssinaturasDoPlano_UC.js';
 
+// Define o controller responsável por lidar com as mensagens do servico-gestao
 @Controller()
 @Dependencies(
   ListarClientes_UC,
@@ -38,6 +40,7 @@ export class GestaoMessageHandler {
     this.listarAssinaturasDoPlanoUC = listarAssinaturasDoPlanoUC;
   }
 
+  //Define os métodos que serão chamados quando uma mensagem for recebida
   @MessagePattern('listar_clientes')
   async listarClientes() {
     return await this.listarClientesUC.run();

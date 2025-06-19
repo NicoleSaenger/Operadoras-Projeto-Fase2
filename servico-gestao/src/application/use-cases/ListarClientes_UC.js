@@ -1,7 +1,7 @@
 import { Injectable, Dependencies } from '@nestjs/common';
 import { ServicoGestao } from '../../domain/services/ServicoGestao.js';
 
-// Use case responsável por listar os clientes
+//Use case responsável por listar os clientes
 @Injectable()
 @Dependencies(ServicoGestao)
 export class ListarClientes_UC {

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-// Entidade que representa um cliente
+//Entidade que representa um cliente
 @Entity()
 export class ClienteModel {
   @PrimaryColumn({ type: 'int' })

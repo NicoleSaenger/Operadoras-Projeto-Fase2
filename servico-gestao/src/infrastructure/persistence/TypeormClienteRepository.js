@@ -1,12 +1,12 @@
-// Importa decoradores e dependências do NestJS
+//Importa decoradores e dependências do NestJS
 import { Injectable, Dependencies } from '@nestjs/common';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-// Importa a entidade e interface necessárias
+//Importa a entidade e interface necessárias
 import { ClienteModel } from '../../domain/entities/ClienteModel.js';
 import { IClienteModelRepository } from '../../domain/repositories/IClienteModelRepository.js';
 
-// Implementação concreta do repositório usando TypeORM
+//Implementação concreta do repositório usando TypeORM
 @Injectable()
 @Dependencies(getRepositoryToken(ClienteModel))
 export class TypeormClienteRepository extends IClienteModelRepository {
@@ -14,10 +14,10 @@ export class TypeormClienteRepository extends IClienteModelRepository {
 
   constructor(repo) {
     super();
-    this.#repo = repo; // Injeção da dependência do repositório
+    this.#repo = repo; //Injeção da dependência do repositório
   }
 
-  // Retorna todos os métodos dos clientes
+  //Retorna todos os métodos dos clientes
   async todos() {
     return await this.#repo.find();
   }

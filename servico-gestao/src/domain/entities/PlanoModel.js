@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
-// Entidade que representa um plano
+//Entidade que representa um plano
 @Entity()
 export class PlanoModel {
   @PrimaryColumn({ type: 'int' })

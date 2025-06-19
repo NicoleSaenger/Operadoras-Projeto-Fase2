@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-// Controller principal
+//Controller principal
 import { GestaoController } from './interfaces/controllers/gestao.controller.js';
 
-// Use cases da camada de aplicação
+//Use cases da camada de aplicação
 import { AtualizarCustoPlano_UC } from './application/use-cases/AtualizarCustoPlano_UC.js';
 import { CadastrarAssinatura_UC } from './application/use-cases/CadastrarAssinatura_UC.js';
 import { ListarAssinaturasDoCliente_UC } from './application/use-cases/ListarAssinaturasDoCliente_UC.js';
@@ -14,26 +14,27 @@ import { ListarClientes_UC } from './application/use-cases/ListarClientes_UC.js'
 import { ListarPlanos_UC } from './application/use-cases/ListarPlanos_UC.js';
 import { VerificarAssinaturaAtiva_UC } from './application/use-cases/VerificarAssinaturaAtiva_UC.js';
 
-// Serviço de domínio
+//Serviço de domínio
 import { ServicoGestao } from './domain/services/ServicoGestao.js';
 
-// Entidades
+//Entidades
 import { ClienteModel } from './domain/entities/ClienteModel.js';
 import { PlanoModel } from './domain/entities/PlanoModel.js';
 import { AssinaturaModel } from './domain/entities/AssinaturaModel.js';
 
-// Repositórios
+//Repositórios
 import { TypeormAssinaturaRepository } from './infrastructure/persistence/TypeormAssinaturaRepository.js';
 import { TypeormPlanoRepository } from './infrastructure/persistence/TypeormPlanoRepository.js';
 import { TypeormClienteRepository } from './infrastructure/persistence/TypeormClienteRepository.js';
 
-// Consumidor de eventos do RabbitMQ
+//Handlers e Consumidor de eventos do RabbitMQ
 import { ConsumidorPagamento } from './infrastructure/messaging/consumidorPagamento.js';
 import { GestaoMessageHandler } from './infrastructure/messaging/gestaoMessageHandler.js';
 import { PlanosAtivosHandler } from './infrastructure/messaging/planosAtivosHandler.js';
 
 @Module({
   imports: [
+    //Configuração da conexão com o banco de dados MySQL via TypeORM
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'sql10.freesqldatabase.com',
@@ -44,15 +45,20 @@ import { PlanosAtivosHandler } from './infrastructure/messaging/planosAtivosHand
       entities: [ClienteModel, PlanoModel, AssinaturaModel],
       synchronize: true,
     }),
+
+    //Habilita a injeção dos repositórios baseados nas entidades
     TypeOrmModule.forFeature([ClienteModel, PlanoModel, AssinaturaModel]),
   ],
+
+  //Controladores HTTP e MessageHandlers
   controllers: [
     GestaoController,
     GestaoMessageHandler,
     PlanosAtivosHandler
   ],
+
   providers: [
-    // Repositórios injetáveis
+    //Repositórios injetáveis
     {
       provide: 'IPlanoModelRepository',
       useClass: TypeormPlanoRepository,
@@ -66,7 +72,7 @@ import { PlanosAtivosHandler } from './infrastructure/messaging/planosAtivosHand
       useClass: TypeormAssinaturaRepository,
     },
 
-    // Serviço de domínio com injeção manual
+    //Serviço de domínio com injeção manual
     {
       provide: ServicoGestao,
       useFactory: (clienteRepo, planoRepo, assinaturaRepo) => {
@@ -79,7 +85,7 @@ import { PlanosAtivosHandler } from './infrastructure/messaging/planosAtivosHand
       ],
     },
 
-    // Consumidor de eventos RabbitMQ
+    //Consumidor de mensagens que escuta eventos de pagamento via RabbitMQ
     {
       provide: ConsumidorPagamento,
       useFactory: (assinaturaRepo) => {
@@ -88,7 +94,7 @@ import { PlanosAtivosHandler } from './infrastructure/messaging/planosAtivosHand
       inject: ['IAssinaturaModelRepository'],
     },
 
-    // Casos de uso
+    //Casos de uso
     ListarClientes_UC,
     ListarPlanos_UC,
     AtualizarCustoPlano_UC,

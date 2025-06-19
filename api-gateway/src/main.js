@@ -8,6 +8,6 @@ async function bootstrap() {
 
   // Inicia a aplicação na porta 3000 e mosrea log de inicialização
   await app.listen(3000);
-  console.log('➡️  API Gateway rodando em http://localhost:3000');
+  console.log('[✓] API Gateway rodando em http://localhost:3000');
 }
 bootstrap();

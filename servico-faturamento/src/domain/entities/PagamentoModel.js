@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn  } from 'typeorm';
 
-// Entidade que representa um pagamento
+//Entidade que representa um pagamento
 @Entity()
 export class PagamentoModel {
-  // Gera automaticamente o ID do pagamento
+  
+  //Gera automaticamente o ID do pagamento
   @PrimaryGeneratedColumn({ type: 'int' })
   codigo;
 

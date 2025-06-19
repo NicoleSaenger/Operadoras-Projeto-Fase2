@@ -1,7 +1,9 @@
 import { Controller, Post, Body, Dependencies, Bind } from '@nestjs/common';
+
+//Importa o caso de uso da aplicação
 import { RegistrarPagamento_UC } from '../../application/use-cases/RegistrarPagamento_UC.js';
 
-// Controlador do serviço de faturamento
+//Define o controller responsável por lidar com os endpoints de faturamento
 @Controller('faturamento')
 @Dependencies(RegistrarPagamento_UC)
 export class FaturamentoController {
@@ -15,23 +17,26 @@ export class FaturamentoController {
   async registrarPagamento(body) {
     const { dataPagamento, codAss, valorPago } = body;
 
+    //Valida se os parâmetros obrigatórios foram fornecidos
     if (!dataPagamento || !codAss || !valorPago) {
       return {
         statusCode: 400,
-        message: 'Parâmetros obrigatórios ausentes.',
+        message: '[x] Parâmetros obrigatórios ausentes.',
       };
     }
 
     try {
+      //Chama o caso de uso para registrar o pagamento
       await this.registrarPagamentoUC.run({ dataPagamento, codAss, valorPago });
+
       return {
         statusCode: 201,
-        message: 'Pagamento registrado com sucesso.',
+        message: '[✓] Pagamento registrado com sucesso!',
       };
     } catch (error) {
       return {
         statusCode: 500,
-        message: `Erro ao registrar pagamento: ${error.message}`,
+        message: `[x] Erro ao registrar pagamento: ${error.message}`,
       };
     }
   }

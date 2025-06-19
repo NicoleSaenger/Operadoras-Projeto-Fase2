@@ -1,4 +1,3 @@
-// main.js
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module.js';
@@ -6,6 +5,7 @@ import { AppModule } from './app.module.js';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  //Conecta o microserviço com RabbitMQ
   app.connectMicroservice({
     transport: Transport.RMQ,
     options: {
@@ -19,7 +19,7 @@ async function bootstrap() {
   await app.init(); // <---- ESSA LINHA É FUNDAMENTAL
   await app.startAllMicroservices();
   await app.listen(process.env.PORT || 3003);
-  console.log('[✓] Servidor servico-planos-ativos rodando na porta 3003');
+  console.log('[✓] Serviço de faturamento rodando em http://localhost:3003');
 }
 
 bootstrap();

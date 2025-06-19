@@ -1,6 +1,6 @@
-// app.module.js
 import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+
 import { AssinaturasController } from './interfaces/controllers/assinaturas.controller.js';
 import { AssinaturasService } from './domain/services/assinaturas.service.js';
 import { PagamentoHandler } from './infrastructure/messaging/pagamento.handler.js';
@@ -8,6 +8,7 @@ import { ConsumidorPagamento } from './infrastructure/messaging/consumidorPagame
 
 @Module({
   imports: [
+    //Configuração do cliente RabbitMQ para comunicação com o servico-gestao
     ClientsModule.register([
       {
         name: 'GESTAO_SERVICE',
@@ -22,8 +23,11 @@ import { ConsumidorPagamento } from './infrastructure/messaging/consumidorPagame
   ],
   controllers: [
     AssinaturasController,
-    PagamentoHandler, // handler será ativado via @MessagePattern
+    PagamentoHandler,
   ],
-  providers: [AssinaturasService, ConsumidorPagamento],
+  providers: [
+    AssinaturasService, 
+    ConsumidorPagamento
+  ],
 })
 export class AppModule {}

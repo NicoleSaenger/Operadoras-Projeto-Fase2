@@ -2,6 +2,7 @@ import { Controller, Dependencies } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AssinaturasService } from '../../domain/services/assinaturas.service.js';
 
+//Controlador que lida com eventos recebidos via @MessagePattern
 @Controller()
 @Dependencies(AssinaturasService)
 export class PagamentoHandler {
